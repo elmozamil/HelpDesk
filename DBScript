@@ -1,0 +1,349 @@
+USE [master]
+GO
+/****** Object:  Database [HelpDesk]    Script Date: 4/10/2015 9:35:13 PM ******/
+CREATE DATABASE [HelpDesk]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'HelpDesk', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER2012D\MSSQL\DATA\HelpDesk.mdf' , SIZE = 15360KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'HelpDesk_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER2012D\MSSQL\DATA\HelpDesk_log.ldf' , SIZE = 5184KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+ALTER DATABASE [HelpDesk] SET COMPATIBILITY_LEVEL = 110
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [HelpDesk].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [HelpDesk] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [HelpDesk] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [HelpDesk] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [HelpDesk] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [HelpDesk] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [HelpDesk] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [HelpDesk] SET AUTO_CREATE_STATISTICS ON 
+GO
+ALTER DATABASE [HelpDesk] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [HelpDesk] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [HelpDesk] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [HelpDesk] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [HelpDesk] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [HelpDesk] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [HelpDesk] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [HelpDesk] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [HelpDesk] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [HelpDesk] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [HelpDesk] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [HelpDesk] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [HelpDesk] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [HelpDesk] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [HelpDesk] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [HelpDesk] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [HelpDesk] SET RECOVERY FULL 
+GO
+ALTER DATABASE [HelpDesk] SET  MULTI_USER 
+GO
+ALTER DATABASE [HelpDesk] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [HelpDesk] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [HelpDesk] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [HelpDesk] SET TARGET_RECOVERY_TIME = 0 SECONDS 
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'HelpDesk', N'ON'
+GO
+USE [HelpDesk]
+GO
+/****** Object:  Table [dbo].[Categories]    Script Date: 4/10/2015 9:35:14 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Categories](
+	[CategoryID] [int] IDENTITY(1,1) NOT NULL,
+	[TypeID] [int] NOT NULL,
+	[CategoryName] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Categories] PRIMARY KEY CLUSTERED 
+(
+	[CategoryID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Departments]    Script Date: 4/10/2015 9:35:14 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Departments](
+	[deptID] [int] IDENTITY(1,1) NOT NULL,
+	[Department] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Departments] PRIMARY KEY CLUSTERED 
+(
+	[deptID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Employees]    Script Date: 4/10/2015 9:35:14 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Employees](
+	[EmployeeCode] [int] IDENTITY(1,1) NOT NULL,
+	[EmployeeName] [varchar](50) NOT NULL,
+	[PhoneNo] [varchar](15) NULL,
+	[Email] [varchar](50) NULL,
+ CONSTRAINT [PK_Employees] PRIMARY KEY CLUSTERED 
+(
+	[EmployeeCode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Sites]    Script Date: 4/10/2015 9:35:14 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Sites](
+	[SiteNo] [int] IDENTITY(1,1) NOT NULL,
+	[SiteName] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_Sites] PRIMARY KEY CLUSTERED 
+(
+	[SiteNo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Status]    Script Date: 4/10/2015 9:35:14 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Status](
+	[Status] [varchar](20) NOT NULL,
+ CONSTRAINT [PK_Status] PRIMARY KEY CLUSTERED 
+(
+	[Status] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[StatusHistory]    Script Date: 4/10/2015 9:35:14 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[StatusHistory](
+	[TicketNo] [bigint] NOT NULL,
+	[StatusHistoryID] [bigint] IDENTITY(1,1) NOT NULL,
+	[Status] [varchar](20) NOT NULL,
+	[ChangeDate] [datetime] NOT NULL,
+	[UserName] [varchar](30) NOT NULL,
+	[Description] [nvarchar](200) NULL,
+ CONSTRAINT [PK_StatusHistory] PRIMARY KEY CLUSTERED 
+(
+	[StatusHistoryID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[TicketAttachments]    Script Date: 4/10/2015 9:35:14 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[TicketAttachments](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[TicketNo] [bigint] NOT NULL,
+	[Attachment] [varbinary](max) NOT NULL,
+	[fileName] [nvarchar](100) NULL,
+	[fileType] [varchar](5) NOT NULL,
+ CONSTRAINT [PK_TicketAttachments] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Tickets]    Script Date: 4/10/2015 9:35:14 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Tickets](
+	[TicketNo] [bigint] IDENTITY(1,1) NOT NULL,
+	[CategoryID] [int] NOT NULL,
+	[Subject] [nvarchar](100) NOT NULL,
+	[Details] [nvarchar](max) NOT NULL,
+	[Priority] [varchar](20) NOT NULL,
+	[Impact] [varchar](20) NOT NULL,
+	[Issuer] [int] NOT NULL,
+	[Status] [varchar](20) NOT NULL,
+	[SiteNo] [int] NOT NULL,
+	[Assignee] [varchar](30) NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ActivePhone] [varchar](15) NULL,
+ CONSTRAINT [PK_Tickets] PRIMARY KEY CLUSTERED 
+(
+	[TicketNo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Types]    Script Date: 4/10/2015 9:35:14 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Types](
+	[TypeID] [int] IDENTITY(1,1) NOT NULL,
+	[Type] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Types] PRIMARY KEY CLUSTERED 
+(
+	[TypeID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 4/10/2015 9:35:14 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Users](
+	[userName] [varchar](30) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[email] [varchar](50) NULL,
+	[deptID] [int] NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[userName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+ALTER TABLE [dbo].[StatusHistory] ADD  CONSTRAINT [DF_StatusHistory_ChangeDate]  DEFAULT (getdate()) FOR [ChangeDate]
+GO
+ALTER TABLE [dbo].[Tickets] ADD  CONSTRAINT [DF_Tickets_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[Categories]  WITH CHECK ADD  CONSTRAINT [FK_Categories_Types] FOREIGN KEY([TypeID])
+REFERENCES [dbo].[Types] ([TypeID])
+GO
+ALTER TABLE [dbo].[Categories] CHECK CONSTRAINT [FK_Categories_Types]
+GO
+ALTER TABLE [dbo].[StatusHistory]  WITH CHECK ADD  CONSTRAINT [FK_StatusHistory_Status] FOREIGN KEY([Status])
+REFERENCES [dbo].[Status] ([Status])
+GO
+ALTER TABLE [dbo].[StatusHistory] CHECK CONSTRAINT [FK_StatusHistory_Status]
+GO
+ALTER TABLE [dbo].[StatusHistory]  WITH CHECK ADD  CONSTRAINT [FK_StatusHistory_Tickets] FOREIGN KEY([TicketNo])
+REFERENCES [dbo].[Tickets] ([TicketNo])
+GO
+ALTER TABLE [dbo].[StatusHistory] CHECK CONSTRAINT [FK_StatusHistory_Tickets]
+GO
+ALTER TABLE [dbo].[StatusHistory]  WITH CHECK ADD  CONSTRAINT [FK_StatusHistory_Users] FOREIGN KEY([UserName])
+REFERENCES [dbo].[Users] ([userName])
+GO
+ALTER TABLE [dbo].[StatusHistory] CHECK CONSTRAINT [FK_StatusHistory_Users]
+GO
+ALTER TABLE [dbo].[TicketAttachments]  WITH CHECK ADD  CONSTRAINT [FK_TicketAttachments_Tickets] FOREIGN KEY([TicketNo])
+REFERENCES [dbo].[Tickets] ([TicketNo])
+GO
+ALTER TABLE [dbo].[TicketAttachments] CHECK CONSTRAINT [FK_TicketAttachments_Tickets]
+GO
+ALTER TABLE [dbo].[Tickets]  WITH CHECK ADD  CONSTRAINT [FK_Tickets_Categories] FOREIGN KEY([CategoryID])
+REFERENCES [dbo].[Categories] ([CategoryID])
+GO
+ALTER TABLE [dbo].[Tickets] CHECK CONSTRAINT [FK_Tickets_Categories]
+GO
+ALTER TABLE [dbo].[Tickets]  WITH CHECK ADD  CONSTRAINT [FK_Tickets_Employees] FOREIGN KEY([Issuer])
+REFERENCES [dbo].[Employees] ([EmployeeCode])
+GO
+ALTER TABLE [dbo].[Tickets] CHECK CONSTRAINT [FK_Tickets_Employees]
+GO
+ALTER TABLE [dbo].[Tickets]  WITH CHECK ADD  CONSTRAINT [FK_Tickets_Sites] FOREIGN KEY([SiteNo])
+REFERENCES [dbo].[Sites] ([SiteNo])
+GO
+ALTER TABLE [dbo].[Tickets] CHECK CONSTRAINT [FK_Tickets_Sites]
+GO
+ALTER TABLE [dbo].[Tickets]  WITH CHECK ADD  CONSTRAINT [FK_Tickets_Status] FOREIGN KEY([Status])
+REFERENCES [dbo].[Status] ([Status])
+GO
+ALTER TABLE [dbo].[Tickets] CHECK CONSTRAINT [FK_Tickets_Status]
+GO
+ALTER TABLE [dbo].[Tickets]  WITH CHECK ADD  CONSTRAINT [FK_Tickets_Users] FOREIGN KEY([Assignee])
+REFERENCES [dbo].[Users] ([userName])
+GO
+ALTER TABLE [dbo].[Tickets] CHECK CONSTRAINT [FK_Tickets_Users]
+GO
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_Departments] FOREIGN KEY([deptID])
+REFERENCES [dbo].[Departments] ([deptID])
+GO
+ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Users_Departments]
+GO
+USE [master]
+GO
+ALTER DATABASE [HelpDesk] SET  READ_WRITE 
+GO
