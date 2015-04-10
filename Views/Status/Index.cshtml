@@ -1,0 +1,31 @@
+﻿@model IEnumerable<HelpDesk.Models.Status>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>Status</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Status1 }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Status1 }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Status1 })
+        </td>
+    </tr>
+}
+
+</table>

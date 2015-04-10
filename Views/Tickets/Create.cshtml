@@ -1,0 +1,173 @@
+﻿@model HelpDesk.Models.Ticket
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<br />
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="panel panel-info">
+        <div class="panel-title"></div>
+        <div class="panel-body">
+            <div class="table table-condensed">
+                <h4> <span class="glyphicon glyphicon-edit"></span> New Ticket</h4>
+
+                <hr />
+
+                <div class="row">
+                    <div class="col-md-12">@Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
+                </div>
+                <br />
+                <div class="row">
+                    @*<div class="col-md-2">@Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })</div>*@
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicons glyphicon-pencil"></span></span>
+                            @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" , placeholder="Subject", title ="Subject" } })
+                            @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @*<div class="col-md-1 col-md-offset-1">@Html.LabelFor(model => model.Status, "Status", htmlAttributes: new { @class = "control-label col-md-2" })</div>*@
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-hourglass"></span></span>
+                            @Html.DropDownList("Status", null,"Select status",  htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-hand-right"></span></span>
+                            @Html.DropDownList("Assignee", null, "Please select assginee", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Assignee, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <br />
+                <div class="row">
+                    @*<div class="col-md-2">@Html.LabelFor(model => model.Issuer, "Issuer", htmlAttributes: new { @class = "control-label col-md-2" })</div>*@
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            @Html.DropDownList("Issuer", null, "Please select issuer", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Issuer, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
+                            <label id="empPhone" name="empPhone" class="form-control" >Phone Number</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                            <label id="empEmail" name="empEmail" class="form-control">Email</label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    @*<div class="col-md-2">@Html.LabelFor(model => model.ActivePhone, "Active Phone", htmlAttributes: new { @class = "control-label col-md-2" })</div>*@
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-phone-alt"></span></span>
+                            @Html.EditorFor(model => model.ActivePhone, new { htmlAttributes = new { @class = "form-control", placeholder="Active Phone", title="Active Phone" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ActivePhone, "", new { @class = "text-danger" })
+                    </div>
+                    @*<div class="col-md-1">@Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })</div>*@
+                    
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-bookmark"></span></span>
+                            @Html.DropDownList("Priority", null, "Select Priority", new { @class = "form-control" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+                    </div>
+                    @*<div class="col-md-1">@Html.LabelFor(model => model.Impact, htmlAttributes: new { @class = "control-label col-md-2" })</div>*@
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                            @Html.DropDownList("Impact", null, "Select Impact", new { @class = "form-control" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Impact, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    @*<div class="col-md-2">@Html.LabelFor(model => model.Category.Type, "TypeID", htmlAttributes: new { @class = "control-label col-md-2" })</div>*@
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-question-sign"></span></span>
+                            @Html.DropDownList("TypeID", null, "Please select a Type", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    @*<div class="col-md-2 col-md-offset-1">@Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })</div>*@
+                    <div class="col-md-4">
+                        @*@Html.DropDownList(null, "Please select a Category", new { class = "form-control", name = "CategoryID", id = "CategoryID" })*@
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></span>
+                            <select id="CategoryID" name="CategoryID" class="form-control" }><option>Categories</option></select>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                            @Html.DropDownList("SiteNo", null, "Select Site", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.SiteNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    @*<div class="col-md-2">@Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })</div>*@
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-list-alt"></span></span>
+                            @Html.TextAreaFor(model => model.Details, new { @class = "form-control", @rows = 10, placeholder="Details", title ="Details" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    @*<div class="col-md-2">@Html.LabelFor(model => model.Assignee, "Assignee", htmlAttributes: new { @class = "control-label col-md-2" })</div>*@
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-cloud-upload"></span></span>
+                            <input type="file" name="Attachments" id="Attachments" class="form-control" multiple />
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-10" id="Selectedfiles">
+
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-9"></div>
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <button type="submit" value="Create" class="btn btn-info btn-circle btn-lg"><i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    @Scripts.Render("~/bundles/newTickets")
+
+}

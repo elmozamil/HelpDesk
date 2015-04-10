@@ -1,0 +1,86 @@
+﻿@model IEnumerable<HelpDesk.Models.Ticket>
+
+@{
+    ViewBag.Title = "MyTickets";
+}
+
+<br/>
+<div class="table table-responsive">
+    <h4> <span class="glyphicon glyphicon-edit"></span> My Tickets</h4>
+    <br/>
+
+    <table class="table table-striped table-bordered table-hover dataTable no-footer" id="myticketTable" role="grid" aria-describedby="dataTables-example_info">
+        <thead>
+            <tr>
+                <th>
+                    No
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Subject)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Priority)
+                </th>
+                <th>
+                    Created
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Issuer
+                </th>
+                <th>
+                    Phone
+                </th>
+                <th>
+                    Status
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(Html.DisplayFor(model => item.TicketNo).ToString(), "Edit", new { id = item.TicketNo })
+                    </td>
+                    <td>
+                        @Html.ActionLink(Html.DisplayFor(modelItem => item.Subject).ToString(), "Edit", new { id = item.TicketNo })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Priority)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Employee.EmployeeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ActivePhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        <a href=~/Tickets/Edit/@item.TicketNo><i class="fa fa-info"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+   
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/dataTable")
+<script>
+    var myticketTable = $('#myticketTable').DataTable();
+    </script>
+}

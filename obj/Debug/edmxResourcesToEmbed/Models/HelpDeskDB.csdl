@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HelpDeskModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeID" Type="Int32" Nullable="false" />
+    <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Type" Relationship="Self.FK_Categories_Types" FromRole="Categories" ToRole="Types" />
+    <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_Categories" FromRole="Categories" ToRole="Tickets" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeCode" />
+    </Key>
+    <Property Name="EmployeeCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PhoneNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_Employees" FromRole="Employees" ToRole="Tickets" />
+  </EntityType>
+  <EntityType Name="Site">
+    <Key>
+      <PropertyRef Name="SiteNo" />
+    </Key>
+    <Property Name="SiteNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SiteName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_Sites" FromRole="Sites" ToRole="Tickets" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="Status1" />
+    </Key>
+    <Property Name="Status1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="StatusHistories" Relationship="Self.FK_StatusHistory_Status" FromRole="Status" ToRole="StatusHistory" />
+    <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_Status" FromRole="Status" ToRole="Tickets" />
+  </EntityType>
+  <EntityType Name="StatusHistory">
+    <Key>
+      <PropertyRef Name="StatusHistoryID" />
+    </Key>
+    <Property Name="TicketNo" Type="Int64" Nullable="false" />
+    <Property Name="StatusHistoryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ChangeDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Status1" Relationship="Self.FK_StatusHistory_Status" FromRole="StatusHistory" ToRole="Status" />
+    <NavigationProperty Name="Ticket" Relationship="Self.FK_StatusHistory_Tickets" FromRole="StatusHistory" ToRole="Tickets" />
+    <NavigationProperty Name="User" Relationship="Self.FK_StatusHistory_Users" FromRole="StatusHistory" ToRole="Users" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Ticket">
+    <Key>
+      <PropertyRef Name="TicketNo" />
+    </Key>
+    <Property Name="TicketNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryID" Type="Int32" Nullable="false" />
+    <Property Name="Subject" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Priority" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Impact" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Issuer" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SiteNo" Type="Int32" Nullable="false" />
+    <Property Name="Assignee" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" Nullable="false" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_Tickets_Categories" FromRole="Tickets" ToRole="Categories" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Tickets_Employees" FromRole="Tickets" ToRole="Employees" />
+    <NavigationProperty Name="Site" Relationship="Self.FK_Tickets_Sites" FromRole="Tickets" ToRole="Sites" />
+    <NavigationProperty Name="Status1" Relationship="Self.FK_Tickets_Status" FromRole="Tickets" ToRole="Status" />
+    <NavigationProperty Name="StatusHistories" Relationship="Self.FK_StatusHistory_Tickets" FromRole="Tickets" ToRole="StatusHistory" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Tickets_Users" FromRole="Tickets" ToRole="Users" />
+    <Property Name="ActivePhone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TicketAttachments" Relationship="HelpDeskModel.FK_TicketAttachments_Tickets" FromRole="Ticket" ToRole="TicketAttachment" />
+  </EntityType>
+  <EntityType Name="Type">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Categories" Relationship="Self.FK_Categories_Types" FromRole="Types" ToRole="Categories" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="userName" />
+    </Key>
+    <Property Name="userName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="StatusHistories" Relationship="Self.FK_StatusHistory_Users" FromRole="Users" ToRole="StatusHistory" />
+    <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_Users" FromRole="Users" ToRole="Tickets" />
+    <Property Name="deptID" Type="Int32" />
+    <NavigationProperty Name="Department" Relationship="HelpDeskModel.FK_Users_Departments" FromRole="User" ToRole="Department" />
+  </EntityType>
+  <Association Name="FK_Categories_Types">
+    <End Role="Types" Type="Self.Type" Multiplicity="1" />
+    <End Role="Categories" Type="Self.Category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Types">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="Categories">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_Categories">
+    <End Role="Categories" Type="Self.Category" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_Employees">
+    <End Role="Employees" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="EmployeeCode" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="Issuer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_Sites">
+    <End Role="Sites" Type="Self.Site" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sites">
+        <PropertyRef Name="SiteNo" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="SiteNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StatusHistory_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="StatusHistory" Type="Self.StatusHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Status1" />
+      </Principal>
+      <Dependent Role="StatusHistory">
+        <PropertyRef Name="Status" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Status1" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="Status" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StatusHistory_Tickets">
+    <End Role="Tickets" Type="Self.Ticket" Multiplicity="1" />
+    <End Role="StatusHistory" Type="Self.StatusHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tickets">
+        <PropertyRef Name="TicketNo" />
+      </Principal>
+      <Dependent Role="StatusHistory">
+        <PropertyRef Name="TicketNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StatusHistory_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="StatusHistory" Type="Self.StatusHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userName" />
+      </Principal>
+      <Dependent Role="StatusHistory">
+        <PropertyRef Name="UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userName" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="Assignee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HelpDeskEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="Sites" EntityType="Self.Site" />
+    <EntitySet Name="Status" EntityType="Self.Status" />
+    <EntitySet Name="StatusHistories" EntityType="Self.StatusHistory" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Tickets" EntityType="Self.Ticket" />
+    <EntitySet Name="Types" EntityType="Self.Type" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Categories_Types" Association="Self.FK_Categories_Types">
+      <End Role="Types" EntitySet="Types" />
+      <End Role="Categories" EntitySet="Categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_Categories" Association="Self.FK_Tickets_Categories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_Employees" Association="Self.FK_Tickets_Employees">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_Sites" Association="Self.FK_Tickets_Sites">
+      <End Role="Sites" EntitySet="Sites" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StatusHistory_Status" Association="Self.FK_StatusHistory_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="StatusHistory" EntitySet="StatusHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_Status" Association="Self.FK_Tickets_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StatusHistory_Tickets" Association="Self.FK_StatusHistory_Tickets">
+      <End Role="Tickets" EntitySet="Tickets" />
+      <End Role="StatusHistory" EntitySet="StatusHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StatusHistory_Users" Association="Self.FK_StatusHistory_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="StatusHistory" EntitySet="StatusHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_Users" Association="Self.FK_Tickets_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <EntitySet Name="TicketAttachments" EntityType="HelpDeskModel.TicketAttachment" />
+    <AssociationSet Name="FK_TicketAttachments_Tickets" Association="HelpDeskModel.FK_TicketAttachments_Tickets">
+      <End Role="Ticket" EntitySet="Tickets" />
+      <End Role="TicketAttachment" EntitySet="TicketAttachments" />
+    </AssociationSet>
+    <EntitySet Name="Departments" EntityType="HelpDeskModel.Department" />
+    <AssociationSet Name="FK_Users_Departments" Association="HelpDeskModel.FK_Users_Departments">
+      <End Role="Department" EntitySet="Departments" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TicketAttachment">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TicketNo" Type="Int64" Nullable="false" />
+    <Property Name="Attachment" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_TicketAttachments_Tickets" FromRole="TicketAttachment" ToRole="Ticket" />
+    <Property Name="fileName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="fileType" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_TicketAttachments_Tickets">
+    <End Type="HelpDeskModel.Ticket" Role="Ticket" Multiplicity="1" />
+    <End Type="HelpDeskModel.TicketAttachment" Role="TicketAttachment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ticket">
+        <PropertyRef Name="TicketNo" />
+      </Principal>
+      <Dependent Role="TicketAttachment">
+        <PropertyRef Name="TicketNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="deptID" />
+    </Key>
+    <Property Name="deptID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Department1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Users" Relationship="HelpDeskModel.FK_Users_Departments" FromRole="Department" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Users_Departments">
+    <End Type="HelpDeskModel.Department" Role="Department" Multiplicity="0..1" />
+    <End Type="HelpDeskModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="deptID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="deptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

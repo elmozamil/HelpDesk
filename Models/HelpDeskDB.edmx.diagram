@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8bb03ee319f74d55be0e24ff0d42545a" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="HelpDeskModel.Category" Width="1.5" PointX="3.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.Employee" Width="1.5" PointX="3.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.Site" Width="1.5" PointX="3.75" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.Status" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.StatusHistory" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.Ticket" Width="1.5" PointX="6" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.Type" Width="1.5" PointX="1.5" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.User" Width="1.5" PointX="3.75" PointY="15.5" IsExpanded="true" />
+        <AssociationConnector Association="HelpDeskModel.FK_Categories_Types" ManuallyRouted="false" />
+        <AssociationConnector Association="HelpDeskModel.FK_Tickets_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="HelpDeskModel.FK_Tickets_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="HelpDeskModel.FK_Tickets_Sites" ManuallyRouted="false" />
+        <AssociationConnector Association="HelpDeskModel.FK_StatusHistory_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="HelpDeskModel.FK_Tickets_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="HelpDeskModel.FK_StatusHistory_Tickets" ManuallyRouted="false" />
+        <AssociationConnector Association="HelpDeskModel.FK_StatusHistory_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="HelpDeskModel.FK_Tickets_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="HelpDeskModel.TicketAttachment" Width="1.5" PointX="8.25" PointY="4.375" />
+        <AssociationConnector Association="HelpDeskModel.FK_TicketAttachments_Tickets" />
+        <EntityTypeShape EntityType="HelpDeskModel.Department" Width="1.5" PointX="1.5" PointY="15.875" />
+        <AssociationConnector Association="HelpDeskModel.FK_Users_Departments" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,217 @@
+﻿@model HelpDesk.Models.Ticket
+
+@*@{
+    ViewBag.Title = "Details";
+}*@
+
+<br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        <div class="panel panel-info" id="tabInfo">
+            <div class="panel-title"></div>
+            <div class="panel-body">
+                <h4> <span class="glyphicon glyphicon-edit"></span>Ticket No. @Html.DisplayFor(model => model.TicketNo) Details </h4>
+
+                <hr />
+
+                <div class="row">
+                    <div class="col-md-12">@Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
+                    @Html.HiddenFor(model => model.TicketNo)
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicons glyphicon-pencil"></span></span>
+                            @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-hourglass"></span></span>
+                            @Html.DropDownList("Status", null, "Select status", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-hand-right"></span></span>
+                            @Html.EditorFor(model => model.User.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            @Html.EditorFor(model => model.Employee.EmployeeName, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Issuer, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
+                            @Html.EditorFor(model => model.Employee.PhoneNo, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                            @Html.EditorFor(model => model.Employee.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-phone-alt"></span></span>
+                            @Html.EditorFor(model => model.ActivePhone, new { htmlAttributes = new { @class = "form-control", placeholder = "Active Phone", title = "Active Phone" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ActivePhone, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-bookmark"></span></span>
+                            @Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+                    </div>
+                    @*<div class="col-md-1">@Html.LabelFor(model => model.Impact, htmlAttributes: new { @class = "control-label col-md-2" })</div>*@
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                            @Html.EditorFor(model => model.Impact, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Impact, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-question-sign"></span></span>
+                            @Html.EditorFor(model => model.Category.Type.Type1, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    @*<div class="col-md-2 col-md-offset-1">@Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })</div>*@
+                    <div class="col-md-4">
+                        @*@Html.DropDownList(null, "Please select a Category", new { class = "form-control", name = "CategoryID", id = "CategoryID" })*@
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></span>
+                            @Html.EditorFor(model => model.Category.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                            @Html.EditorFor(model => model.Site.SiteName, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.SiteNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-list-alt"></span></span>
+                            @Html.TextAreaFor(model => model.Details, new { @class = "form-control", @rows = 10, placeholder = "Details", title = "Details" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-info" id="attachmentTab">
+            <div class="panel-title">Attachements</div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td>
+                                #
+                            </td>
+                            <td>
+                                File Name
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                    bool exists = System.IO.Directory.Exists(Server.MapPath(@"~\Attachments\" + Model.TicketNo.ToString()));
+                    if (exists) { 
+                    DirectoryInfo directory = new DirectoryInfo(Server.MapPath(@"~\Attachments\" + Model.TicketNo.ToString()));
+   
+    
+                    var files = directory.GetFiles().ToList();
+                    Console.Write(files);
+                    int count = 0;
+                    foreach (var i in files)
+                    {
+                        count = count + 1;
+                            <tr>
+                                <td>
+                                    @count
+                                </td>
+                                <td>
+                                    <a href='\Attachments\@Model.TicketNo.ToString()\@i.Name.ToString()' target="_blank">
+                                        @i.Name.ToString()
+                                    </a>
+                                </td>
+                            </tr>
+                    }
+                    }
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div id="tabSolution" class="panel panel-info">
+            <div class="panel-title">Solution Data</div>
+            <div class="panel-body">
+                <div class="row">
+                    <input type="hidden" value=@User.Identity.Name id="txtuserName" name="txtuserName">
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-list-alt"></span></span>
+                            <textarea rows="10" class="form-control" placeholder="Solutions" title="Solution" id="txtSolution" name="txtSolution"></textarea>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-9"></div>
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            <button type="submit" value="Submit Solution" class="btn btn-info btn-circle btn-lg"><i class="fa fa-check"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@
+

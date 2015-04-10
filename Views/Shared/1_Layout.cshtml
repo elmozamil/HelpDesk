@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink("Home", "Index", "Home", htmlAttributes: new { @class = "navbar-brand" })*@
+                <a class="navbar-brand" href="~/"><img alt="Brand" src="~/Images/logo.png" width="30px;"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="http://www.google.com">Admin Area <span class="sr-only"></span></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tickets <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="~/NewTicket">New Ticket</a></li>
+                            <li>@Html.ActionLink("My Tickets", "MyTickets", "Tickets", new { userName = @User.Identity.Name }, null)</li>
+                            <li>@Html.ActionLink("Assigned Tickets", "AssignedTickets", "Tickets", new { userName = @User.Identity.Name }, null) </li>
+                            <li class="divider"></li>
+                            <li><a href="#">Department Tickets</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">All</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tickets <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="~/NewTicket">New Ticket</a></li>
+                            <li><a href="#">My Tickets</a></li>
+                            <li><a href="#">Assigned</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                @using (Html.BeginForm("Edit", "Tickets", FormMethod.Get, new { @class = "navbar-form navbar-left", role = "search" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search" name="id">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                }
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li id="pageHitCount"><a href="~/"> 1 Active User </a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hello, @User.Identity.Name! <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a id="logout" href="/">Logout</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div id="body">
+
+        @RenderSection("featured", required: false)
+        <section class="content-wrapper">
+            @RenderBody()
+        </section>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted">&copy; @DateTime.Now.Year mztech.info</p>
+        </div>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
